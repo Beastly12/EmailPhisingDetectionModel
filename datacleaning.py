@@ -38,15 +38,36 @@ plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
 plt.show()
 
+# Visualize class distribution of label in pie chart
+plt.figure(figsize=(8, 8))
+label_counts = df['label'].value_counts()
+colors = ['#ff9999', '#66b3ff']
+explode = (0.05, 0)  # explode the first slice slightly
+
+plt.pie(label_counts.values,
+        labels=label_counts.index,
+        autopct='%1.1f%%',
+        startangle=90,
+        colors=colors,
+        explode=explode,
+        shadow=True)
+plt.title('Distribution of Email Labels (Phishing vs Legitimate)', fontsize=14, fontweight='bold')
+plt.axis('equal')
+plt.tight_layout()
+plt.show()
+
+print(f"\nClass Distribution:")
+print(label_counts)
+print(f"\nClass Balance Ratio: {label_counts.min() / label_counts.max():.2%}")
 
 # STEP 5 — Handle Missing Values for receiver & subject
 # Replace missing receivers (cannot drop these rows)
 df['receiver'] = df['receiver'].fillna('unknown')
 # Replace missing subjects (important for NLP)
-df['subject'] = df['subject'].fillna('no_subject')
+# df['subject'] = df['subject'].fillna('no_subject')
 
 # dropping rows with missing labels
-df = df.dropna(subset=['label'])
+# df = df.dropna(subset=['label'])
 
 def extract_links(text):
     if pd.isna(text):
@@ -65,20 +86,20 @@ else:
     df['links'] = df['links'].fillna('none')
 
 
-def clean_text(text):
-    if pd.isna(text):
-        return ""
-    text = text.lower()
-    text = re.sub(r'<.*?>', '', text)
-    text = re.sub(r'http\S+|www\S+|https\S+', '', text)
-    text = re.sub(r'^(re|fwd):', '', text)
-    text = re.sub(r'[^a-z\s]', ' ', text)
-    text = re.sub(r'\s+', ' ', text)
+# def clean_text(text):
+#     if pd.isna(text):
+#         return ""
+#     text = text.lower()
+#     text = re.sub(r'<.*?>', '', text)
+#     text = re.sub(r'http\S+|www\S+|https\S+', '', text)
+#     text = re.sub(r'^(re|fwd):', '', text)
+#     text = re.sub(r'[^a-z\s]', ' ', text)
+#     text = re.sub(r'\s+', ' ', text)
+#
+#     return text.strip()
 
-    return text.strip()
-
-df['body'] = df['body'].apply(clean_text)
-df['subject'] = df['subject'].apply(clean_text)
+# df['body'] = df['body'].apply(clean_text)
+# df['subject'] = df['subject'].apply(clean_text)
 
 
 
@@ -106,7 +127,7 @@ df['hour'] = df['date'].dt.hour
 df['weekday'] = df['date'].dt.weekday
 
 # Extract timezone offset
-df['tz_offset'] = df['date'].dt.strftime('%z')
+# df['tz_offset'] = df['date'].dt.strftime('%z')
 
 
 

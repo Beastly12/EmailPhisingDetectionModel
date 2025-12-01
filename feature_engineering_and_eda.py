@@ -1,6 +1,6 @@
 """
 FEATURE ENGINEERING & EXPLORATORY DATA ANALYSIS
-================================================
+-----------------------------------------------------------------
 This script performs:
 1. Feature Engineering: Extract metadata and create new variables
 2. Privacy Preservation: Anonymize sensitive information
@@ -27,9 +27,8 @@ print("=" * 70)
 print("FEATURE ENGINEERING & EXPLORATORY DATA ANALYSIS")
 print("=" * 70)
 
-# ============================================
+
 # STEP 1: LOAD CLEANED DATA
-# ============================================
 print("\n[STEP 1] Loading cleaned dataset...")
 df = pd.read_csv('./data/Cleaned_PhishingEmailData.csv')
 
@@ -38,9 +37,8 @@ print(f"✓ Columns: {df.columns.tolist()}")
 print(f"\nClass distribution:")
 print(df['label'].value_counts())
 
-# ============================================
+
 # STEP 2: DOMAIN EXTRACTION
-# ============================================
 print("\n" + "=" * 70)
 print("[STEP 2] EXTRACTING DOMAIN FEATURES")
 print("=" * 70)
@@ -63,9 +61,9 @@ df['receiver_domain'] = df['receiver'].apply(extract_domain)
 print(f"✓ Unique sender domains: {df['sender_domain'].nunique()}")
 print(f"✓ Unique receiver domains: {df['receiver_domain'].nunique()}")
 
-# ============================================
+
 # STEP 3: EMAIL ANONYMIZATION (Privacy Compliance)
-# ============================================
+
 print("\n" + "=" * 70)
 print("[STEP 3] ANONYMIZING EMAIL ADDRESSES (Privacy Preservation)")
 print("=" * 70)
@@ -91,9 +89,9 @@ print("\nDropping original email columns for privacy compliance...")
 df = df.drop(columns=['sender', 'receiver'])
 print("✓ Original email addresses removed from dataset")
 
-# ============================================
+
 # STEP 4: SUBJECT-BASED FEATURES
-# ============================================
+
 print("\n" + "=" * 70)
 print("[STEP 4] EXTRACTING SUBJECT-BASED FEATURES")
 print("=" * 70)
@@ -119,9 +117,9 @@ df['subject_has_re_fwd'] = df['subject'].fillna('').str.contains(
 print(f"✓ Average subject length: {df['subject_length'].mean():.2f} characters")
 print(f"✓ Emails with RE/FWD: {df['subject_has_re_fwd'].sum()} ({df['subject_has_re_fwd'].mean() * 100:.1f}%)")
 
-# ============================================
+
 # STEP 5: BODY-BASED FEATURES
-# ============================================
+
 print("\n" + "=" * 70)
 print("[STEP 5] EXTRACTING BODY-BASED FEATURES")
 print("=" * 70)
@@ -143,9 +141,9 @@ print(f"✓ Average body length: {df['body_length'].mean():.2f} characters")
 print(f"✓ Average exclamation marks: {df['body_num_exclaim'].mean():.2f}")
 print(f"✓ Emails with HTML: {df['contains_html'].sum()} ({df['contains_html'].mean() * 100:.1f}%)")
 
-# ============================================
+
 # STEP 6: URL-BASED FEATURES
-# ============================================
+
 print("\n" + "=" * 70)
 print("[STEP 6] EXTRACTING URL-BASED FEATURES")
 print("=" * 70)
@@ -162,9 +160,9 @@ df['has_suspicious_url'] = df['links'].fillna('').str.contains(
 print(f"✓ Average URLs per email: {df['num_urls'].mean():.2f}")
 print(f"✓ Emails with suspicious URLs: {df['has_suspicious_url'].sum()} ({df['has_suspicious_url'].mean() * 100:.1f}%)")
 
-# ============================================
+
 # STEP 7: TEMPORAL FEATURES
-# ============================================
+
 print("\n" + "=" * 70)
 print("[STEP 7] CREATING TEMPORAL FEATURES")
 print("=" * 70)
@@ -193,9 +191,9 @@ if 'hour' in df.columns:
     print(f"✓ Time of day distribution:")
     print(df['time_of_day'].value_counts())
 
-# ============================================
+
 # STEP 8: INTERACTION & DERIVED FEATURES
-# ============================================
+
 print("\n" + "=" * 70)
 print("[STEP 8] CREATING INTERACTION FEATURES")
 print("=" * 70)
@@ -221,9 +219,9 @@ df['financial_score'] = df['body'].fillna('').str.lower().apply(
 print(f"✓ Emails with urgency indicators: {(df['urgency_score'] > 0).sum()}")
 print(f"✓ Emails with financial keywords: {(df['financial_score'] > 0).sum()}")
 
-# ============================================
+
 # STEP 9: EXPLORATORY DATA ANALYSIS
-# ============================================
+
 print("\n" + "=" * 70)
 print("[STEP 9] EXPLORATORY DATA ANALYSIS")
 print("=" * 70)
@@ -403,9 +401,9 @@ print(summary_stats)
 summary_stats.to_csv('outputs/eda_plots/feature_summary_statistics.csv')
 print("✓ Saved summary statistics to: outputs/eda_plots/feature_summary_statistics.csv")
 
-# ============================================
+
 # STEP 10: SAVE ENGINEERED FEATURES
-# ============================================
+
 print("\n" + "=" * 70)
 print("[STEP 10] SAVING ENGINEERED FEATURES")
 print("=" * 70)
