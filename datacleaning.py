@@ -3,19 +3,19 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import re
 
-# Step 1: Load dataset
+# Load dataset
 df_raw = pd.read_csv('./data/CEAS_08.csv', encoding='ISO-8859-1',
                      na_values=['na', 'NA', 'Unknown', ''])
 
 
-# Step 2: Clean column names
+# Clean column names
 df_raw.columns = (
     df_raw.columns.str.strip()
     .str.replace(' ', '_')
     .str.replace(r'[^\w]', '', regex=True)
 )
 
-# Step 3: Create a working copy and remove duplicates
+# Create a working copy and remove duplicates
 df = df_raw.copy()
 
 df.info()
@@ -25,7 +25,7 @@ before = len(df_raw)
 df.drop_duplicates(inplace=True)
 print(f"Removed {before - len(df)} duplicate rows.")
 
-# Step 4: Visualise missing values BEFORE cleaning
+# Visualise missing values BEFORE cleaning
 missing_before = df.isnull().sum().sort_values(ascending=False)
 missing_df = missing_before.reset_index()
 missing_df.columns = ['Column', 'MissingCount']
@@ -60,7 +60,7 @@ print(f"\nClass Distribution:")
 print(label_counts)
 print(f"\nClass Balance Ratio: {label_counts.min() / label_counts.max():.2%}")
 
-# STEP 5 — Handle Missing Values for receiver & subject
+# Handle Missing Values for receiver & subject
 # Replace missing receivers (cannot drop these rows)
 df['receiver'] = df['receiver'].fillna('unknown')
 # Replace missing subjects (important for NLP)
@@ -103,7 +103,7 @@ else:
 
 
 
-# STEP 6 — Clean and standardize the date column
+# Clean and standardize the date column
 
 # Convert date strings to datetime (with UTC to handle mixed timezones)
 df['date'] = pd.to_datetime(df['date'], errors='coerce', utc=True)
@@ -131,7 +131,7 @@ df['weekday'] = df['date'].dt.weekday
 
 
 
-#Step 9: Visualise missing values AFTER cleaning
+#Visualise missing values AFTER cleaning
 missing_after = df.isnull().sum()
 plt.figure(figsize=(10, 5))
 sns.barplot(x=missing_after.index, y=missing_after.values, hue=missing_after.index, palette='Greens', legend=False)
@@ -141,7 +141,7 @@ plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
 plt.show()
 
-# Step 10: Comparison chart of missing values before vs after
+#Comparison chart of missing values before vs after
 missing_comparison = pd.DataFrame({
     'Before Cleaning': missing_before,
     'After Cleaning': missing_after
@@ -159,8 +159,7 @@ if 'label' in df.columns:
     df = df.drop(columns=['label'])
     df['label'] = label_col
 
-# Step 11: Save the cleaned dataset to a new CSV file
-# Save with date for human reference
+
 df.to_csv('./output/Cleaned_PhishingEmailData_with_dates.csv', index=False)
 
 # Clean whitespaces and stray characters
@@ -171,7 +170,7 @@ df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
 df_ml = df.drop(columns=['date'])
 df_ml.to_csv('./output/Cleaned_PhishingEmailData.csv', index=False)
 
-# Step 12: Preview the cleaned dataset
+
 print("\nPreview of cleaned dataset:")
 print(df.head())
 

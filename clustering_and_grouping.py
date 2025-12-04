@@ -28,9 +28,7 @@ print("CLUSTERING ANALYSIS FOR PHISHING EMAIL DETECTION")
 print("="*80)
 
 
-# ============================================
-# STEP 1: LOAD AND PREPROCESS DATA
-# ============================================
+
 print("\n[STEP 1] Loading and Preprocessing Data")
 print("-" * 80)
 
@@ -66,7 +64,7 @@ X_pca = pca.fit_transform(X_scaled)
 print(f"Reduced dimensions: {X_features.shape[1]} → {X_pca.shape[1]}")
 print(f"Total variance preserved: {pca.explained_variance_ratio_.sum()*100:.2f}%")
 
-# Visualize PCA variance
+#  PCA variance visualisation
 plt.figure(figsize=(12, 5))
 
 plt.subplot(1, 2, 1)
@@ -93,9 +91,9 @@ plt.close()
 print(f"Saved: {OUTPUT_DIR}/01_pca_variance.png")
 
 
-# ============================================
-# STEP 2: FIND OPTIMAL K
-# ============================================
+
+#FIND OPTIMAL K
+
 print("\n[STEP 2] Determining Optimal K")
 print("-" * 80)
 
@@ -147,9 +145,9 @@ plt.close()
 print(f"Saved: {OUTPUT_DIR}/02_optimal_k.png")
 
 
-# ============================================
-# STEP 3: RUN CLUSTERING ALGORITHMS
-# ============================================
+
+# RUN CLUSTERING ALGORITHMS
+
 print("\n[STEP 3] Running Clustering Algorithms")
 print("-" * 80)
 
@@ -230,9 +228,9 @@ else:
     print(f"Cluster sizes: {np.bincount(labels_spectral)}")
 
 
-# ============================================
-# STEP 4: EVALUATE CLUSTERING QUALITY
-# ============================================
+
+# EVALUATE CLUSTERING QUALITY
+
 print("\n[STEP 4] Evaluating Clustering Quality")
 print("-" * 80)
 
@@ -341,9 +339,9 @@ plt.close()
 print(f"Saved: {OUTPUT_DIR}/04_metrics_comparison.png")
 
 
-# ============================================
-# STEP 5: CLUSTER PROFILING
-# ============================================
+
+# CLUSTER PROFILING
+
 print("\n[STEP 5] Cluster Profiling")
 print("-" * 80)
 
@@ -407,9 +405,9 @@ alignment.to_csv(f'{OUTPUT_DIR}/cluster_alignment.csv')
 print(f"Saved: {OUTPUT_DIR}/cluster_alignment.csv")
 
 
-# ============================================
-# STEP 6: VISUALIZATION
-# ============================================
+
+# VISUALIZATION
+
 print("\n[STEP 6] Creating Visualizations")
 print("-" * 80)
 
@@ -508,9 +506,9 @@ plt.close()
 print(f"Saved: {OUTPUT_DIR}/06_best_model_tsne.png")
 
 
-# ============================================
-# STEP 7: FINAL SUMMARY
-# ============================================
+
+#FINAL SUMMARY
+
 print("\n" + "="*80)
 print("CLUSTERING ANALYSIS COMPLETE")
 print("="*80)
@@ -530,10 +528,6 @@ print("  • Higher Silhouette Score = Better cluster separation")
 print(f"  • {best_algorithm} achieved the best clustering quality")
 print("  • Check cluster profiles to understand what each cluster represents")
 
-print("\nNext Steps:")
-print("  1. Review visualizations in outputs/clustering_analysis/")
-print("  2. Analyze cluster_profiles.csv to interpret clusters")
-print("  3. Use cluster labels as features for ML models")
 
 print("\n" + "="*80)
 print("All outputs saved to:", OUTPUT_DIR)
