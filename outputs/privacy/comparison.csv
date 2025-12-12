@@ -1,6 +1,0 @@
-Method,Privacy Level,Accuracy
-Baseline (no privacy),None,0.8582556506193334
-"DP (ε=0.5, strong)",Strong,0.8444643085174307
-"DP (ε=1.0, balanced)",Medium,0.8522538628527646
-"DP (ε=2.0, weak)",Weak,0.8540416294215298
-Federated Learning,Strong,0.8581279530072787

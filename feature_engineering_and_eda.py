@@ -21,7 +21,7 @@ print("=" * 70)
 
 #LOAD CLEANED DATA
 print("\n[STEP 1] Loading cleaned dataset...")
-df = pd.read_csv('./data/Cleaned_PhishingEmailData.csv')
+df = pd.read_csv('./outputs/Cleaned_PhishingEmailData.csv')
 
 print(f"✓ Loaded {len(df)} rows and {len(df.columns)} columns")
 print(f"✓ Columns: {df.columns.tolist()}")
