@@ -63,8 +63,7 @@ print(f"\nClass Balance Ratio: {label_counts.min() / label_counts.max():.2%}")
 # Handle Missing Values for receiver & subject
 # Replace missing receivers (cannot drop these rows)
 df['receiver'] = df['receiver'].fillna('unknown')
-# Replace missing subjects (important for NLP)
-# df['subject'] = df['subject'].fillna('no_subject')
+
 
 # dropping rows with missing labels
 # df = df.dropna(subset=['label'])
@@ -160,7 +159,7 @@ if 'label' in df.columns:
     df['label'] = label_col
 
 
-df.to_csv('./output/Cleaned_PhishingEmailData_with_dates.csv', index=False)
+df.to_csv('./outputs/Cleaned_PhishingEmailData_with_dates.csv', index=False)
 
 # Clean whitespaces and stray characters
 df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
@@ -168,7 +167,7 @@ df = df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
 
 # Drop date for ML model
 df_ml = df.drop(columns=['date'])
-df_ml.to_csv('./output/Cleaned_PhishingEmailData.csv', index=False)
+df_ml.to_csv('./outputs/Cleaned_PhishingEmailData.csv', index=False)
 
 
 print("\nPreview of cleaned dataset:")
